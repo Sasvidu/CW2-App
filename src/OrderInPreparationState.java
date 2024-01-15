@@ -25,10 +25,8 @@ public class OrderInPreparationState implements OrderState{
             throw new IllegalArgumentException("Please select between pick up or delivery option.");
         }else if(this.isPickup.equals(isPickupValues.YES.toString())){
             order.setState(new OrderOutForPickupState());
-            System.out.println("Order is out for customer pickup.");
         }else if(this.isPickup.equals(isPickupValues.NO.toString())){
             order.setState(new OrderOutForDeliveryState());
-            System.out.println("Order is out for pickup by a delivery person.");
         }else{
             this.isPickup = null;
             throw new IllegalArgumentException("Something went wrong, please try again.");

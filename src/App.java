@@ -65,6 +65,7 @@ public class App {
                     break;
                 default:
                     System.out.println("Invalid command. Please try again.\n");
+                    break;
             }
         }
     }

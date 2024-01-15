@@ -1,11 +1,12 @@
 import java.util.*;
 
-public class Order {
+public class Order extends OrderObservable {
 
     private String orderId;
     private Map<OrderItem, Integer> orderItems;
     private Scanner scanner;
     private OrderState state;
+    private OrderDecorator wrapper;
 
     public enum OrderStatus {
         PLACED,
@@ -19,10 +20,12 @@ public class Order {
         this.orderItems = new HashMap<>();
         this.scanner = App.getInstance().getScanner();
         this.state = new OrderCreatedState();
-        System.out.println("New Order Created. Order Id: " + this.orderId);
+        this.wrapper = new RegularOrderWrapper(this);
+        addObserver(new OrderStatusObserver());
+        notifyObservers(this);
     }
 
-    private double calculateTotalPrice() {
+    public double calculateTotalPrice() {
         double totalPrice = 0.0;
         for (Map.Entry<OrderItem, Integer> entry : orderItems.entrySet()) {
             OrderItem item = entry.getKey();
@@ -48,8 +51,11 @@ public class Order {
             System.out.println("   Subtotal: $" + item.getPrice() * quantity);
         }
 
-        System.out.println("\nTotal Order Price: $" + calculateTotalPrice());
-        System.out.println("\nOrder State: " + getState().getStateName());
+        System.out.println("\nGross Order Price: $" + calculateTotalPrice());
+        System.out.println("Order State: " + getState().getStateName());
+        if(!(this.wrapper instanceof RegularOrderWrapper)){
+            System.out.println("Net Order Price: " + this.wrapper.getCost());
+        }
         System.out.println("");
     }
 
@@ -88,10 +94,19 @@ public class Order {
 
     public void process() {
         state.process(this);
+        notifyObservers(this);
     }
 
     public String getOrderId() {
         return orderId;
+    }
+
+    public OrderDecorator getWrapper(){
+        return this.wrapper;
+    }
+
+    public void addWrapper(OrderDecorator wrapper){
+        this.wrapper = wrapper;
     }
 
 }

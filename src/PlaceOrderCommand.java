@@ -6,7 +6,7 @@ public class PlaceOrderCommand implements Command{
         Order order = new Order("ORD-" + System.currentTimeMillis());
         OrderRepository.getInstance().addOrder(order);
 
-        // Prompt the user to create ice creams until they say "No"
+        // Prompt the user to create items until they say "No"
         while (true) {
             order.createOrderItem();
             System.out.print("Do you want to add another item? (Yes/No): ");
@@ -22,14 +22,33 @@ public class PlaceOrderCommand implements Command{
 
         // Confirm the order
         System.out.print("Confirm the order? (Yes/No): ");
-        String confirmation = App.getInstance().getScanner().nextLine().trim().toLowerCase();
-        if (confirmation.equals("yes")) {
+        String confirmationResponse = App.getInstance().getScanner().nextLine().trim().toLowerCase();
+        if (confirmationResponse.equals("yes")) {
             OrderCreatedState state = (OrderCreatedState) order.getState();
             state.setIsCancelled(false);
             order.process();
         } else {
             OrderCreatedState state = (OrderCreatedState) order.getState();
             state.setIsCancelled(true);
+            order.process();
+            return;
+        }
+
+        //Customize the order
+        System.out.println("Do you want to customize the order? (Yes/No): ");
+        String customizationResponse = App.getInstance().getScanner().nextLine().trim().toLowerCase();
+        if(customizationResponse.equals("yes")){
+            OrderPlacedState state = (OrderPlacedState) order.getState();
+            state.setIsCustomizable(true);
+            Command customizeOrderCommand = new CustomizeOrderCommand(order);
+            customizeOrderCommand.execute();
+            order.process();
+            System.out.println("New Order Details: ");
+            order.printOrderDetails();
+            order.process();
+        }else{
+            OrderPlacedState state = (OrderPlacedState) order.getState();
+            state.setIsCustomizable(false);
             order.process();
         }
     }

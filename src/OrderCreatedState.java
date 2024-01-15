@@ -1,4 +1,5 @@
 public class OrderCreatedState implements OrderState {
+
     private String isCancelled;
 
     enum isCancelledValues{
@@ -21,14 +22,11 @@ public class OrderCreatedState implements OrderState {
     @Override
     public void process(Order order) {
         if(this.isCancelled == null){
-            throw new IllegalArgumentException("Please conform the order.\n");
+            throw new IllegalArgumentException("Please confirm the order.\n");
         }else if(this.isCancelled.equals(isCancelledValues.YES.toString())){
             order.setState(new OrderCancelledState());
-            System.out.println("Order canceled. Thank you for visiting!\n\n");
         }else if(this.isCancelled.equals(isCancelledValues.NO.toString())){
-            order.setState(new OrderInPreparationState());
-            System.out.println("Order confirmed! Thank you for your purchase.");
-            System.out.println("Order is being prepared...\n\n");
+            order.setState(new OrderPlacedState());
         }else{
             this.isCancelled = null;
             throw new IllegalArgumentException("Something went wrong, please try again.\n\n");
