@@ -7,7 +7,7 @@ public class IceCreamDirector {
     private Scanner scanner;
 
     public IceCreamDirector() {
-        this.scanner = new Scanner(System.in);
+        this.scanner = App.getInstance().getScanner();
     }
 
     public IceCream createIceCream() {
