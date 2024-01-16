@@ -3,6 +3,7 @@ import java.util.*;
 public class Order extends OrderObservable {
 
     private String orderId;
+    private String username;
     private Map<OrderItem, Integer> orderItems;
     private Scanner scanner;
     private OrderState state;
@@ -15,10 +16,22 @@ public class Order extends OrderObservable {
         DELIVERED
     }
 
-    public Order(String orderId) {
+    public Order(String orderId, String username) {
         this.orderId = orderId;
+        this.username = username;
         this.orderItems = new HashMap<>();
-        this.scanner = App.getInstance().getScanner();
+        this.scanner = CustomerApp.getInstance().getScanner();
+        this.state = new OrderCreatedState();
+        this.wrapper = new RegularOrderWrapper(this);
+        addObserver(new OrderStatusObserver());
+        notifyObservers(this);
+    }
+
+    public Order(String orderId, String username, Order originalOrder) {
+        this.orderId = orderId;
+        this.username = username;
+        this.orderItems = originalOrder.getOrderItems();
+        this.scanner = CustomerApp.getInstance().getScanner();
         this.state = new OrderCreatedState();
         this.wrapper = new RegularOrderWrapper(this);
         addObserver(new OrderStatusObserver());
@@ -99,6 +112,14 @@ public class Order extends OrderObservable {
 
     public String getOrderId() {
         return orderId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Map getOrderItems(){
+        return this.orderItems;
     }
 
     public OrderDecorator getWrapper(){

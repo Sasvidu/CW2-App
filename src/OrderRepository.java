@@ -1,5 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderRepository {
     private static OrderRepository instance;
@@ -26,6 +28,10 @@ public class OrderRepository {
 
     public Order getOrder(String orderId) {
         return orders.get(orderId);
+    }
+
+    public List<Order> getAllOrders() {
+        return new ArrayList<>(orders.values());
     }
 
     public void removeOrder(String orderId) {

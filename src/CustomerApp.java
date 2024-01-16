@@ -1,8 +1,10 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
-public class App {
+public class CustomerApp {
 
-    private static App instance;
+    private static CustomerApp instance;
 
     private DummyData dummyData;
     private FlavorRepository flavorRepository;
@@ -10,18 +12,21 @@ public class App {
     private SyrupRepository syrupRepository;
     private OrderRepository orderRepository;
     private Scanner scanner;
+    private String currentUser;
+    private Map<String, Order> favoriteOrderMap;
 
-    private App() {
-        System.out.println("App Started!\nInitializing...");
+    private CustomerApp() {
+        System.out.println("Customer App Started!\nInitializing...\n");
         this.dummyData = DummyData.getInstance();
         this.orderRepository = OrderRepository.getInstance();
         initializeRepositories();
+        this.favoriteOrderMap = new HashMap<>();
         System.out.println("\n\n\n");
     }
 
-    public static synchronized App getInstance() {
+    public static synchronized CustomerApp getInstance() {
         if (instance == null) {
-            instance = new App();
+            instance = new CustomerApp();
         }
         return instance;
     }
@@ -36,9 +41,16 @@ public class App {
         System.out.println("Loading Complete!");
     }
 
+    public void setCurrentUser(String username) {
+        this.currentUser = username;
+        if (!favoriteOrderMap.containsKey(username)) {
+            favoriteOrderMap.put(username, null);
+        }
+    }
+
     public void run() {
         System.out.println("Welcome to the Ice Cream Shop!");
-        System.out.println("Commands: Place Order / View Order / View All Orders / Quit\n\n");
+        System.out.println("Commands: Place Order / Favorite Order / View Order / View All Orders / Quit\n\n");
 
         while (true) {
             this.scanner = new Scanner(System.in);
@@ -47,17 +59,25 @@ public class App {
 
             switch (command) {
                 case "place order":
-                    Command placeOrderCommand = new PlaceOrderCommand();
+                    Command placeOrderCommand = new PlaceOrderCommand(this.currentUser);
                     placeOrderCommand.execute();
                     break;
+                case "favorite order":
+                    Command favoriteOrderCommand = new PlaceFavoriteOrderCommand(this.currentUser);
+                    favoriteOrderCommand.execute();
+                    break;
                 case "view order":
-                    Command viewOrderCommand = new ViewOrderCommand();
+                    Command viewOrderCommand = new ViewOrderCommand(this.currentUser);
                     viewOrderCommand.execute();
                     break;
                 case "view all orders":
-                    Command viewAllOrdersCommand = new ViewAllOrdersCommand();
+                    Command viewAllOrdersCommand = new ViewAllOrdersOfCustomerCommand(this.currentUser);
                     viewAllOrdersCommand.execute();
                     break;
+                case "logout":
+                    System.out.println("Logging out...");
+                    currentUser = null;
+                    return;
                 case "quit":
                     System.out.println("Exiting the application. Goodbye!");
                     scanner.close();
@@ -72,6 +92,14 @@ public class App {
 
     public Scanner getScanner() {
         return scanner;
+    }
+
+    public String getCurrentUser() {
+        return currentUser;
+    }
+
+    public Map getFavoriteOrderMap(){
+        return this.favoriteOrderMap;
     }
 
 }

@@ -14,7 +14,7 @@ public class CreateIceCreamCommand implements Command {
         IceCream iceCream = iceCreamDirector.createIceCream();
 
         if (iceCream != null) {
-            Scanner scanner = App.getInstance().getScanner();
+            Scanner scanner = CustomerApp.getInstance().getScanner();
 
             System.out.print("Enter the quantity of ice cream needed: ");
             int quantity = Integer.parseInt(scanner.nextLine());

@@ -1,16 +1,22 @@
 public class PlaceOrderCommand implements Command{
 
+    private String username;
+
+    public PlaceOrderCommand (String username){
+        this.username = username;
+    }
+
     @Override
     public void execute() {
         System.out.println("Creating a new order...");
-        Order order = new Order("ORD-" + System.currentTimeMillis());
+        Order order = new Order("ORD-" + System.currentTimeMillis(), this.username);
         OrderRepository.getInstance().addOrder(order);
 
         // Prompt the user to create items until they say "No"
         while (true) {
             order.createOrderItem();
             System.out.print("Do you want to add another item? (Yes/No): ");
-            String response = App.getInstance().getScanner().nextLine().trim().toLowerCase();
+            String response = CustomerApp.getInstance().getScanner().nextLine().trim().toLowerCase();
             if (response.equals("no")) {
                 break;
             }
@@ -22,7 +28,7 @@ public class PlaceOrderCommand implements Command{
 
         // Confirm the order
         System.out.print("Confirm the order? (Yes/No): ");
-        String confirmationResponse = App.getInstance().getScanner().nextLine().trim().toLowerCase();
+        String confirmationResponse = CustomerApp.getInstance().getScanner().nextLine().trim().toLowerCase();
         if (confirmationResponse.equals("yes")) {
             OrderCreatedState state = (OrderCreatedState) order.getState();
             state.setIsCancelled(false);
@@ -36,7 +42,7 @@ public class PlaceOrderCommand implements Command{
 
         //Customize the order
         System.out.println("Do you want to customize the order? (Yes/No): ");
-        String customizationResponse = App.getInstance().getScanner().nextLine().trim().toLowerCase();
+        String customizationResponse = CustomerApp.getInstance().getScanner().nextLine().trim().toLowerCase();
         if(customizationResponse.equals("yes")){
             OrderPlacedState state = (OrderPlacedState) order.getState();
             state.setIsCustomizable(true);
@@ -51,6 +57,10 @@ public class PlaceOrderCommand implements Command{
             state.setIsCustomizable(false);
             order.process();
         }
+
+        //Save Order as Favorite
+        Command saveFavoriteCommand = new SaveFavoriteOrderCommand(order, username);
+        saveFavoriteCommand.execute();
     }
 
 }
