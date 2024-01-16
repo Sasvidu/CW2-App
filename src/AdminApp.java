@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class AdminApp {
+public class AdminApp implements App{
 
     private static AdminApp instance;
 
@@ -20,9 +20,10 @@ public class AdminApp {
         return instance;
     }
 
+    @Override
     public void run() {
         System.out.println("Welcome to the Admin Panel!");
-        System.out.println("Commands: Dispatch Order / View All Orders / Logout / Quit\n\n");
+        System.out.println("Commands: Dispatch Order / Add Seasonal Promotion / View All Orders / Logout / Quit\n\n");
 
         while (true) {
             this.scanner = new Scanner(System.in);
@@ -33,6 +34,10 @@ public class AdminApp {
                 case "dispatch order":
                     Command dispatchOrderCommand = new CompleteOrderPreparationCommand();
                     dispatchOrderCommand.execute();
+                    break;
+                case "add seasonal promotion":
+                    Command addSeasonalPromotionCommand = new AddSeasonalPromotionCommand();
+                    addSeasonalPromotionCommand.execute();
                     break;
                 case "view all orders":
                     Command viewAllOrdersCommand = new ViewAllOrdersCommand();
@@ -56,4 +61,5 @@ public class AdminApp {
     public Scanner getScanner() {
         return scanner;
     }
+
 }

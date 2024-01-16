@@ -1,4 +1,6 @@
-public class OrderOutForPickupState implements OrderState{
+public class OrderInDeliveryState implements OrderState {
+
+    private String deliverer;
 
     @Override
     public void process(Order order) {
@@ -11,7 +13,11 @@ public class OrderOutForPickupState implements OrderState{
 
     @Override
     public String getStateName() {
-        return "Out for Pickup";
+        return "Being Delivered...";
+    }
+
+    public void setDeliverer(String delivererUsername){
+        this.deliverer = delivererUsername;
     }
 
 }

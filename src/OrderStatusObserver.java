@@ -20,6 +20,10 @@ public class OrderStatusObserver implements OrderObserver{
                 return "Order is out for customer pickup, Order Id: " + orderId + "\n\n";
             case "OrderOutForDeliveryState":
                 return "Order is out for pickup by a delivery person, Order Id: " + orderId + "\n\n";
+            case "OrderInDeliveryState":
+                return "Delivery accepted for order: " + orderId + "\n\n";
+            case "OrderCompletedState":
+                return "Order completed, Order Id: " + orderId + "\n" + "Thank you!" + "\n\n";
             case "OrderCancelledState":
                 return "Order cancelled, Order Id:" + orderId + "\n" + "Thank you for visiting!" + "\n\n" ;
             default:

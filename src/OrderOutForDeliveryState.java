@@ -2,7 +2,7 @@ public class OrderOutForDeliveryState implements OrderState {
 
     @Override
     public void process(Order order) {
-
+        order.setState(new OrderInDeliveryState());
     }
 
     @Override

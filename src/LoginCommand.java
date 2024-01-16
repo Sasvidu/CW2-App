@@ -24,9 +24,14 @@ public class LoginCommand implements Command {
             CustomerApp app = CustomerApp.getInstance();
             app.setCurrentUser(username);
             app.run();
-        } else if(admins.containsKey(username) && admins.get(username).equals(password)){
+        } else if (admins.containsKey(username) && admins.get(username).equals(password)){
             System.out.println("Admin Login successful, " + username + "!\n\n");
             AdminApp app = AdminApp.getInstance();
+            app.run();
+        } else if (deliverers.containsKey(username) && deliverers.get(username).equals(password)){
+            System.out.println("Deliverer Login successful, " + username + "!\n\n");
+            DeliveryApp app = DeliveryApp.getInstance();
+            app.setCurrentDeliverer(username);
             app.run();
         } else {
             System.out.println("Invalid username or password. Login failed.");

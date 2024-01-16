@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PromotionRepository {
+
     private static PromotionRepository instance;
     private List<PromotionStrategy> promotionStrategies;
 

@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class CustomerApp {
+public class CustomerApp implements App{
 
     private static CustomerApp instance;
 
@@ -48,9 +48,10 @@ public class CustomerApp {
         }
     }
 
+    @Override
     public void run() {
         System.out.println("Welcome to the Ice Cream Shop!");
-        System.out.println("Commands: Place Order / Favorite Order / View Order / View All Orders / Quit\n\n");
+        System.out.println("Commands: Place Order / Favorite Order / Pickup Order / Record Feedback / View Order / View All Orders / Quit\n\n");
 
         while (true) {
             this.scanner = new Scanner(System.in);
@@ -65,6 +66,14 @@ public class CustomerApp {
                 case "favorite order":
                     Command favoriteOrderCommand = new PlaceFavoriteOrderCommand(this.currentUser);
                     favoriteOrderCommand.execute();
+                    break;
+                case "pickup order":
+                    Command pickupOrderCommand = new CompletePickupCommand();
+                    pickupOrderCommand.execute();
+                    break;
+                case "record feedback":
+                    Command feedbackCommand = new RecordFeedbackCommand(this.currentUser);
+                    feedbackCommand.execute();
                     break;
                 case "view order":
                     Command viewOrderCommand = new ViewOrderCommand(this.currentUser);
