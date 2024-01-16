@@ -16,13 +16,21 @@ public class LoginCommand implements Command {
         String password = scanner.nextLine().trim();
 
         Map<String, String> customers = CustomerRepository.getInstance().getCustomers();
+        Map<String, String> admins = AdminRepository.getInstance().getAdmins();
+        Map<String, String> deliverers = DelivererRepository.getInstance().getDeliverers();
+
         if (customers.containsKey(username) && customers.get(username).equals(password)) {
             System.out.println("Customer Login successful, " + username + "!\n\n");
             CustomerApp app = CustomerApp.getInstance();
             app.setCurrentUser(username);
             app.run();
+        } else if(admins.containsKey(username) && admins.get(username).equals(password)){
+            System.out.println("Admin Login successful, " + username + "!\n\n");
+            AdminApp app = AdminApp.getInstance();
+            app.run();
         } else {
             System.out.println("Invalid username or password. Login failed.");
         }
     }
+
 }

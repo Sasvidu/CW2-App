@@ -38,4 +38,6 @@ public class OrderInPreparationState implements OrderState{
         return "Being Prepared";
     }
 
+    public String getIsPickup(){ return isPickup; }
+
 }

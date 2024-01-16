@@ -61,6 +61,22 @@ public class PlaceOrderCommand implements Command{
         //Save Order as Favorite
         Command saveFavoriteCommand = new SaveFavoriteOrderCommand(order, username);
         saveFavoriteCommand.execute();
+
+        //Choose Delivery Method
+        Command setDeliveryOptionCommand = new SetDeliveryOptionCommand(order);
+        setDeliveryOptionCommand.execute();
+
+        // Select Promotion
+        Command selectPromotionCommand = new SelectPromotionCommand(order);
+        selectPromotionCommand.execute();
+
+        // Make Payment
+        Command selectPaymentMethodCommand = new SelectPaymentMethodCommand(order);
+        selectPaymentMethodCommand.execute();
+
+        //Final Data
+        System.out.println("\n");
+        order.printOrderDetails();
     }
 
 }

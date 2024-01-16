@@ -15,7 +15,7 @@ public class LoginDummyData {
     };
 
     private Object[][] adminList = {
-            {"admin1", "adminpassword"},
+            {"admin1", "adminpassword1"},
             {"admin2", "adminpassword2"},
     };
 

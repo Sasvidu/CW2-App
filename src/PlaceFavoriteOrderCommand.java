@@ -58,9 +58,26 @@ public class PlaceFavoriteOrderCommand implements Command {
                 state.setIsCustomizable(false);
                 clonedOrder.process();
             }
+
+            //Choose Delivery Method
+            Command setDeliveryOptionCommand = new SetDeliveryOptionCommand(clonedOrder);
+            setDeliveryOptionCommand.execute();
+
+            // Select Promotion
+            Command selectPromotionCommand = new SelectPromotionCommand(clonedOrder);
+            selectPromotionCommand.execute();
+
+            // Make Payment
+            Command selectPaymentMethodCommand = new SelectPaymentMethodCommand(clonedOrder);
+            selectPaymentMethodCommand.execute();
+
+            //Final Data
+            System.out.println("\n");
+            clonedOrder.printOrderDetails();
         } else {
             System.out.println("No favorite order found for the specified username.\n\n");
         }
     }
+
 
 }

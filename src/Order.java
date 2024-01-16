@@ -8,6 +8,9 @@ public class Order extends OrderObservable {
     private Scanner scanner;
     private OrderState state;
     private OrderDecorator wrapper;
+    private Boolean isPaid;
+    private double finalPayment;
+    private PaymentContext paymentContext;
 
     public enum OrderStatus {
         PLACED,
@@ -23,6 +26,7 @@ public class Order extends OrderObservable {
         this.scanner = CustomerApp.getInstance().getScanner();
         this.state = new OrderCreatedState();
         this.wrapper = new RegularOrderWrapper(this);
+        this.isPaid = false;
         addObserver(new OrderStatusObserver());
         notifyObservers(this);
     }
@@ -67,10 +71,24 @@ public class Order extends OrderObservable {
         System.out.println("\nGross Order Price: $" + calculateTotalPrice());
         System.out.println("Order State: " + getState().getStateName());
         if(!(this.wrapper instanceof RegularOrderWrapper)){
-            System.out.println("Net Order Price: " + this.wrapper.getCost());
+            System.out.println("Net Order Price: $" + this.wrapper.getCost());
         }
+
+        if (finalPayment > 0) {
+            System.out.println("Final Payment: $" + finalPayment);
+        }
+
+        System.out.println("");
+
+        if(isPaid){
+            System.out.println("Paid!");
+        }else{
+            System.out.println("Pending Payment...");
+        }
+
         System.out.println("");
     }
+
 
     public void addItem(OrderItem item, int quantity) {
         if (item == null || quantity <= 0) {
@@ -92,22 +110,19 @@ public class Order extends OrderObservable {
         }
     }
 
-    private void createIceCream() {
-        Command createIceCreamCommand = new CreateIceCreamCommand(this);
-        createIceCreamCommand.execute();
+    public void process() {
+        state.process(this);
+        notifyObservers(this);
+    }
+
+    public void pay(PaymentContext paymentContext){
+        this.paymentContext = paymentContext;
+        paymentContext.executePayment(this);
+        this.isPaid = true;
     }
 
     public OrderState getState(){
         return this.state;
-    }
-
-    public void setState(OrderState state) {
-        this.state = state;
-    }
-
-    public void process() {
-        state.process(this);
-        notifyObservers(this);
     }
 
     public String getOrderId() {
@@ -126,8 +141,25 @@ public class Order extends OrderObservable {
         return this.wrapper;
     }
 
+    public Boolean getIsPaid(){
+        return this.isPaid;
+    }
+
+    public void setState(OrderState state) {
+        this.state = state;
+    }
+
     public void addWrapper(OrderDecorator wrapper){
         this.wrapper = wrapper;
+    }
+
+    public void setFinalPayment(double finalPayment){
+        this.finalPayment = finalPayment;
+    }
+
+    private void createIceCream() {
+        Command createIceCreamCommand = new CreateIceCreamCommand(this);
+        createIceCreamCommand.execute();
     }
 
 }
