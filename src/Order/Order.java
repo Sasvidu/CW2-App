@@ -67,7 +67,7 @@ public class Order extends OrderObservable {
             return;
         }
 
-        System.out.println("Order.Order Details (Order.Order ID: " + orderId + "):");
+        System.out.println("Order Details (Order ID: " + orderId + "):");
         for (Map.Entry<OrderItem, Integer> entry : orderItems.entrySet()) {
             OrderItem item = entry.getKey();
             int quantity = entry.getValue();
@@ -77,10 +77,10 @@ public class Order extends OrderObservable {
             System.out.println("   Subtotal: $" + item.getPrice() * quantity);
         }
 
-        System.out.println("\nGross Order.Order Price: $" + calculateTotalPrice());
-        System.out.println("Order.Order State: " + getState().getStateName());
+        System.out.println("\nGross Order Price: $" + calculateTotalPrice());
+        System.out.println("Order State: " + getState().getStateName());
         if(!(this.wrapper instanceof RegularOrderWrapper)){
-            System.out.println("Net Order.Order Price: $" + this.wrapper.getCost());
+            System.out.println("Net Order Price: $" + this.wrapper.getCost());
         }
 
         if (finalPayment > 0) {
