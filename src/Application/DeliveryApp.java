@@ -14,7 +14,7 @@ public class DeliveryApp implements App {
     private Map<String, List<Order>> delivererToOrderMap;
 
     private DeliveryApp() {
-        System.out.println("Delivery Application.App Started!\nInitializing...\n");
+        System.out.println("Delivery App Started!\nInitializing...\n");
         this.scanner = new Scanner(System.in);
         this.delivererToOrderMap = new HashMap<>();
         System.out.println("\n\n\n");
@@ -33,7 +33,7 @@ public class DeliveryApp implements App {
 
     @Override
     public void run() {
-        System.out.println("Welcome to the Delivery Application.App!");
+        System.out.println("Welcome to the Delivery App!");
         System.out.println("Commands: Accept Delivery / Complete Delivery / Logout / Quit\n\n");
 
         while (true) {

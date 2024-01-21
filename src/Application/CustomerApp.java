@@ -20,7 +20,7 @@ public class CustomerApp implements App {
     private Map<String, Order> favoriteOrderMap;
 
     private CustomerApp() {
-        System.out.println("Customer Application.App Started!\nInitializing...\n");
+        System.out.println("Customer App Started!\nInitializing...\n");
         this.dummyData = DummyData.getInstance();
         this.orderRepository = OrderRepository.getInstance();
         initializeRepositories();
@@ -55,7 +55,7 @@ public class CustomerApp implements App {
     @Override
     public void run() {
         System.out.println("Welcome to the Ice Cream Shop!");
-        System.out.println("Commands: Place Order.Order / Favorite Order.Order / Pickup Order.Order / Record Feedback / View Order.Order / View All Orders / Quit\n\n");
+        System.out.println("Commands: Place Order / Favorite Order / Pickup Order / Record Feedback / View Order / View All Orders / Quit\n\n");
 
         while (true) {
             this.scanner = new Scanner(System.in);

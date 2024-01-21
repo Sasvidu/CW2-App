@@ -12,7 +12,7 @@ public class AdminApp implements App {
     private Scanner scanner;
 
     private AdminApp() {
-        System.out.println("Admin Application.App Started!\nInitializing...\n");
+        System.out.println("Admin App Started!\nInitializing...\n");
         this.orderRepository = OrderRepository.getInstance();
         System.out.println("\n\n\n");
     }
@@ -27,7 +27,7 @@ public class AdminApp implements App {
     @Override
     public void run() {
         System.out.println("Welcome to the Admin Panel!");
-        System.out.println("Commands: Dispatch Order.Order / Add Seasonal Promotion / View All Orders / Logout / Quit\n\n");
+        System.out.println("Commands: Dispatch Order / Add Seasonal Promotion / View All Orders / Logout / Quit\n\n");
 
         while (true) {
             this.scanner = new Scanner(System.in);
