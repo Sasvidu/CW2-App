@@ -32,7 +32,7 @@ public class PlaceFavoriteOrderCommand implements Command {
             OrderRepository.getInstance().addOrder(clonedOrder);
 
             // Display cloned order details
-            System.out.println("\nOrder.Order Summary:");
+            System.out.println("\nOrder Summary:");
             clonedOrder.printOrderDetails();
 
             // Confirm the cloned order
@@ -60,7 +60,7 @@ public class PlaceFavoriteOrderCommand implements Command {
                 Command customizeOrderCommand = new CustomizeOrderCommand(clonedOrder);
                 customizeOrderCommand.execute();
                 clonedOrder.process();
-                System.out.println("New Order.Order Details: ");
+                System.out.println("New Order Details: ");
                 clonedOrder.printOrderDetails();
                 clonedOrder.process();
             } else {

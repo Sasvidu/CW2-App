@@ -47,6 +47,7 @@ public class Order extends OrderObservable {
         this.scanner = CustomerApp.getInstance().getScanner();
         this.state = new OrderCreatedState();
         this.wrapper = new RegularOrderWrapper(this);
+        this.isPaid = false;
         addObserver(new OrderStatusObserver());
         notifyObservers(this);
     }

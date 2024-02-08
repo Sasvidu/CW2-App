@@ -26,7 +26,8 @@ public class LoyaltyPromotion implements PromotionStrategy {
             }
         }
 
-        double finalPriceMultiplier = calculateDiscountRate(orderCount);
+        //double finalPriceMultiplier = calculateDiscountRate(orderCount);
+        double finalPriceMultiplier = 0.8;
         System.out.println("You have made " + orderCount + " total orders.\nThe price will be reduced down to: " + finalPriceMultiplier);
         return order.getWrapper().getCost() * finalPriceMultiplier;
     }

@@ -10,26 +10,26 @@ public class OrderStatusObserver implements OrderObserver {
 
     private String getMessage(String stateName, String orderId) {
         switch (stateName) {
-            case "Order.States.OrderCreatedState":
-                return "New Order.Order Created. Order.Order Id: " + orderId + "\n\n";
-            case "Order.States.OrderPlacedState":
-                return "Order.Order confirmed! Thank you for your purchase. Order.Order Id: " + orderId + "\n\n";
-            case "Order.States.OrderCustomizedState":
-                return "Order.Order customized successfully, Order.Order Id: " + orderId + "\n\n";
-            case "Order.States.OrderInPreparationState":
-                return "Order.Order is being prepared, Order.Order Id: " + orderId + "\n\n";
-            case "Order.States.OrderOutForPickupState":
-                return "Order.Order is out for customer pickup, Order.Order Id: " + orderId + "\n\n";
-            case "Order.States.OrderOutForDeliveryState":
-                return "Order.Order is out for pickup by a delivery person, Order.Order Id: " + orderId + "\n\n";
-            case "Order.States.OrderInDeliveryState":
+            case "OrderCreatedState":
+                return "New Order Created. Order Id: " + orderId + "\n\n";
+            case "OrderPlacedState":
+                return "Order confirmed! Thank you for your purchase. Order Id: " + orderId + "\n\n";
+            case "OrderCustomizedState":
+                return "Order customized successfully, Order Id: " + orderId + "\n\n";
+            case "OrderInPreparationState":
+                return "Order is being prepared, Order Id: " + orderId + "\n\n";
+            case "OrderOutForPickupState":
+                return "Order is out for customer pickup, Order Id: " + orderId + "\n\n";
+            case "OrderOutForDeliveryState":
+                return "Order is out for pickup by a delivery person, Order Id: " + orderId + "\n\n";
+            case "OrderInDeliveryState":
                 return "Delivery accepted for order: " + orderId + "\n\n";
-            case "Order.States.OrderCompletedState":
-                return "Order.Order completed, Order.Order Id: " + orderId + "\n" + "Thank you!" + "\n\n";
-            case "Order.States.OrderCancelledState":
-                return "Order.Order cancelled, Order.Order Id:" + orderId + "\n" + "Thank you for visiting!" + "\n\n" ;
+            case "OrderCompletedState":
+                return "Order completed, Order Id: " + orderId + "\n" + "Thank you!" + "\n\n";
+            case "OrderCancelledState":
+                return "Order cancelled, Order Id:" + orderId + "\n" + "Thank you for visiting!" + "\n\n" ;
             default:
-                return "Unknown Order.Order State, Order.Order Id: " + orderId;
+                return "Unknown Order State, Order Id: " + orderId;
         }
     }
 
